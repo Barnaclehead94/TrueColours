@@ -2,22 +2,12 @@
 
 
 #include "PlayerCharacterPawn.h"
-#include "Components/BoxComponent.h"
 
 // Sets default values
 APlayerCharacterPawn::APlayerCharacterPawn()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	BoxComp = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collider"));
-	RootComponent = BoxComp;
-
-	BaseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
-	BaseMesh->SetupAttachment(RootComponent);
-
-	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
-	ProjectileSpawnPoint->SetupAttachment(BaseMesh);
 
 }
 
