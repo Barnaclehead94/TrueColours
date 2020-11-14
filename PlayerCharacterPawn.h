@@ -6,10 +6,21 @@
 #include "GameFramework/Pawn.h"
 #include "PlayerCharacterPawn.generated.h"
 
+
+class UBoxComponent;
+
 UCLASS()
 class TRUECOLOURS_API APlayerCharacterPawn : public APawn
 {
 	GENERATED_BODY()
+
+private:
+	UPROPERTY()		
+	UBoxComponent* BoxComp;
+	UPROPERTY()
+	UStaticMeshComponent* BaseMesh;
+	UPROPERTY()	
+	USceneComponent* ProjectileSpawnPoint;
 
 public:
 	// Sets default values for this pawn's properties
