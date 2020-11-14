@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "GameFramework/Character.h"
 #include "PlayerCharacterPawn.generated.h"
 
 class UBoxComponent;
@@ -18,8 +19,7 @@ private:
 	UBoxComponent* BoxComp;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* BaseMesh;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))	
-	USceneComponent* ProjectileSpawnPoint;
+
 
 public:
 	// Sets default values for this pawn's properties

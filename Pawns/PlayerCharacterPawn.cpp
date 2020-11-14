@@ -16,8 +16,6 @@ APlayerCharacterPawn::APlayerCharacterPawn()
 	BaseMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeletal Mesh"));
 	BaseMesh->SetupAttachment(RootComponent);
 
-	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
-	ProjectileSpawnPoint->SetupAttachment(BaseMesh);
 
 }
 
@@ -41,4 +39,4 @@ void APlayerCharacterPawn::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
-
+\
