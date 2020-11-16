@@ -2,6 +2,8 @@
 
 
 #include "PlayerCharacter.h"
+#include "Horn.h"
+#include "Components/StaticMeshComponent.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -16,6 +18,7 @@ void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	Horn = GetWorld()->SpawnActor<AHorn>(HornClass);
 }
 
 // Called every frame

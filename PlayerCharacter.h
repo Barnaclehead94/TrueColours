@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "PlayerCharacter.generated.h"
 
+class AHorn;
+
 UCLASS()
 class TRUECOLOURS_API APlayerCharacter : public ACharacter
 {
@@ -29,4 +31,10 @@ public:
 private:
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AHorn> HornClass;
+
+	UPROPERTY()
+	AHorn* Horn;
 };
