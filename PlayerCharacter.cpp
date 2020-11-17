@@ -19,6 +19,9 @@ void APlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	Horn = GetWorld()->SpawnActor<AHorn>(HornClass);
+	Horn->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("HornSocket"));
+	Horn->SetOwner(this);
+
 }
 
 // Called every frame
@@ -38,6 +41,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis(TEXT("MoveRight"),this, &APlayerCharacter::MoveRight);
 	PlayerInputComponent->BindAxis(TEXT("LookRight"),this, &APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction(TEXT("PrimaryFire"), EInputEvent::IE_Pressed, this, &APlayerCharacter::PrimaryFire);
 }
 
 void APlayerCharacter::MoveForward(float AxisValue) 
@@ -48,6 +52,11 @@ void APlayerCharacter::MoveForward(float AxisValue)
 void APlayerCharacter::MoveRight(float AxisValue) 
 {
 	AddMovementInput(GetActorRightVector() * AxisValue);	
+}
+
+void APlayerCharacter::PrimaryFire() 
+{
+	Horn->PrimaryFire();
 }
 
 

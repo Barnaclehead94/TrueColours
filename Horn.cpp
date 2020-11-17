@@ -18,6 +18,11 @@ AHorn::AHorn()
 	Mesh->SetupAttachment(Root);
 }
 
+void AHorn::PrimaryFire() 
+{
+	UE_LOG(LogTemp, Warning, TEXT("You've been shot"));
+}
+
 // Called when the game starts or when spawned
 void AHorn::BeginPlay()
 {
