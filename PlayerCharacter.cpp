@@ -19,8 +19,11 @@ void APlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	Horn = GetWorld()->SpawnActor<AHorn>(HornClass);
+	if (HornClass)
+	{
 	Horn->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("HornSocket"));
 	Horn->SetOwner(this);
+	}
 
 }
 

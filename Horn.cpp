@@ -2,7 +2,7 @@
 
 
 #include "Horn.h"
-
+#include "Kismet/GameplayStatics.h"
 #include "Components/StaticMeshComponent.h"
 
 // Sets default values
@@ -16,11 +16,18 @@ AHorn::AHorn()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(Root);
+
+	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("ProjectileSpawnPoint"));
+	ProjectileSpawnPoint->SetupAttachment(Root);
+
 }
 
 void AHorn::PrimaryFire() 
 {
-	UE_LOG(LogTemp, Warning, TEXT("You've been shot"));
+	FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
+	FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
+
+	UGameplayStatics::SpawnEmitterAttached(HornLaser, ProjectileSpawnPoint, NAME_None, SpawnLocation, SpawnRotation);
 }
 
 // Called when the game starts or when spawned
