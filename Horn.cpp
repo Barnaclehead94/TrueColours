@@ -3,7 +3,9 @@
 
 #include "Horn.h"
 #include "Kismet/GameplayStatics.h"
+#include "DrawDebugHelpers.h"
 #include "Components/StaticMeshComponent.h"
+#include "GameFramework/PlayerController.h"
 
 // Sets default values
 AHorn::AHorn()
@@ -27,7 +29,18 @@ void AHorn::PrimaryFire()
 	FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
 	FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
 
-	UGameplayStatics::SpawnEmitterAttached(HornLaser, ProjectileSpawnPoint, NAME_None, SpawnLocation, SpawnRotation);
+	UGameplayStatics::SpawnEmitterAtLocation(this,HornLaser,SpawnLocation, SpawnRotation);
+
+	APawn* OwnerPawn = Cast<APawn>(GetOwner());
+	if (OwnerPawn != nullptr) return;
+	AController* OwnerController = OwnerPawn->GetController();
+	if (OwnerController != nullptr) return;
+
+	FVector Location;
+	FRotator Rotation;
+	OwnerController->GetPlayerViewPoint(Location, Rotation);
+
+	DrawDebugCamera(GetWorld(), Location, Rotation, 90, 2, FColor::Red, true);
 }
 
 // Called when the game starts or when spawned

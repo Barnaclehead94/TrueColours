@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "PlayerCharacter.generated.h"
 
 class AHorn;
@@ -29,13 +31,36 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
-	void MoveForward(float AxisValue);
-	void MoveRight(float AxisValue);
-	void PrimaryFire();
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AHorn> HornClass;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))	
+	USpringArmComponent* SAC;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))	
+	UCameraComponent* Cam;
+
 	UPROPERTY()
 	AHorn* Horn;
+
+	// COMPONENTS
+	float DefaultArmLength = 600.f;
+	float CombatArmLength = 950.f;
+
+	FRotator DefaultSpringArmRot = FRotator(-10.f, 0.f, 0.f);
+
+	FRotator CombatSpringArmRot = FRotator(-20.5f, 0.f, 0.f);
+	
+	// MOVEMENT
+	void MoveForward(float AxisValue);
+	void MoveRight(float AxisValue);
+	
+	//COMBAT
+	void PrimaryFire();
+	UPROPERTY()
+	bool CombatMode;
+	void Draw();
+
+	bool FirstPerson;
 };
