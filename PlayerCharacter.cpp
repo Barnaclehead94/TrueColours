@@ -20,17 +20,18 @@ APlayerCharacter::APlayerCharacter()
 	SAC->TargetArmLength = DefaultArmLength;
 	SAC->SetRelativeRotation(DefaultSpringArmRot);
 
-	SAC->bEnableCameraLag = true;
-	SAC->CameraLagSpeed = 20;
-	SAC->CameraLagMaxDistance = 20;
+	Cam->AttachTo(SAC, USpringArmComponent::SocketName);
+
+	CombatMode = false;
 
 	SAC->bEnableCameraRotationLag = true;
 	SAC->CameraRotationLagSpeed = 4;
 	SAC->CameraLagMaxTimeStep = 1;
+	
+	SAC->bEnableCameraLag = true;
+	SAC->CameraLagSpeed = 20;
+	SAC->CameraLagMaxDistance = 20;
 
-	Cam->AttachTo(SAC, USpringArmComponent::SocketName);
-
-	CombatMode = false;
 }
 
 // Called when the game starts or when spawned
@@ -102,6 +103,14 @@ void APlayerCharacter::Draw()
 {
 	if (CombatMode)
 	{
+		SAC->bEnableCameraRotationLag = true;
+		SAC->CameraRotationLagSpeed = 4;
+		SAC->CameraLagMaxTimeStep = 1;
+		
+		SAC->bEnableCameraLag = true;
+		SAC->CameraLagSpeed = 20;
+		SAC->CameraLagMaxDistance = 20;
+
 		SAC->TargetArmLength = DefaultArmLength;
 		SAC->SetRelativeRotation(DefaultSpringArmRot);
 		UE_LOG(LogTemp, Warning, TEXT("Weapon holstered"));
@@ -109,6 +118,9 @@ void APlayerCharacter::Draw()
 	}
 	else
 	{
+		SAC->bEnableCameraRotationLag = false;
+		SAC->bEnableCameraLag = false;
+
 		SAC->TargetArmLength = CombatArmLength;
 		SAC->SetRelativeRotation(CombatSpringArmRot);
 		SAC->SetRelativeLocation(FVector(25.0f, 0.f, 100.f));

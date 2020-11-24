@@ -5,7 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
 #include "Components/StaticMeshComponent.h"
-#include "GameFramework/PlayerController.h"
+#include "GameFramework/Controller.h"
 
 // Sets default values
 AHorn::AHorn()
@@ -32,9 +32,24 @@ void AHorn::PrimaryFire()
 	UGameplayStatics::SpawnEmitterAtLocation(this,HornLaser,SpawnLocation, SpawnRotation);
 
 	APawn* OwnerPawn = Cast<APawn>(GetOwner());
-	if (OwnerPawn != nullptr) return;
+	if (OwnerPawn == nullptr) 
+	{
+		UE_LOG(LogTemp, Warning, TEXT("OwnerPawn not detected"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("OwnerPawn detected"));
+	}
+
 	AController* OwnerController = OwnerPawn->GetController();
-	if (OwnerController != nullptr) return;
+	if (OwnerController == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("OwnerController not detected"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("OwnerController detected"));
+	}
 
 	FVector Location;
 	FRotator Rotation;
