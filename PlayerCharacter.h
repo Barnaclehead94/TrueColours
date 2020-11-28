@@ -45,11 +45,12 @@ private:
 	AHorn* Horn;
 
 	// COMPONENTS
-	float DefaultArmLength = 600.f;
-	float CombatArmLength = 950.f;
+	UPROPERTY(EditAnywhere)
+	float DefaultArmLength = 700.f;
+	UPROPERTY(EditAnywhere)
+	float CombatArmLength = 850.f;
 
 	FRotator DefaultSpringArmRot = FRotator(-10.f, 0.f, 0.f);
-
 	FRotator CombatSpringArmRot = FRotator(-20.5f, 0.f, 0.f);
 	
 	// MOVEMENT

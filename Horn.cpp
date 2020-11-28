@@ -4,6 +4,7 @@
 #include "Horn.h"
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
+#include "Engine/EngineTypes.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Controller.h"
 
@@ -32,30 +33,27 @@ void AHorn::PrimaryFire()
 	UGameplayStatics::SpawnEmitterAtLocation(this,HornLaser,SpawnLocation, SpawnRotation);
 
 	APawn* OwnerPawn = Cast<APawn>(GetOwner());
-	if (OwnerPawn == nullptr) 
-	{
-		UE_LOG(LogTemp, Warning, TEXT("OwnerPawn not detected"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("OwnerPawn detected"));
-	}
+	if (OwnerPawn == nullptr) return;
 
 	AController* OwnerController = OwnerPawn->GetController();
-	if (OwnerController == nullptr)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("OwnerController not detected"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("OwnerController detected"));
-	}
+	if (OwnerController == nullptr) return;
 
 	FVector Location;
 	FRotator Rotation;
 	OwnerController->GetPlayerViewPoint(Location, Rotation);
 
-	DrawDebugCamera(GetWorld(), Location, Rotation, 90, 2, FColor::Red, true);
+	FVector End = Location + Rotation.Vector() * MaxRange;
+	// TODO Linetrace
+	FHitResult Hit;
+	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECollisionChannel::ECC_GameTraceChannel1);
+	if (bSuccess)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Hit detected"));
+		DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Blue, true);
+		DrawDebugPoint(GetWorld(), Location, 20, FColor::Red, true);
+	}
+	
+	// DrawDebugCamera(GetWorld(), Location, Rotation, 90, 2, FColor::Red, true);
 }
 
 // Called when the game starts or when spawned

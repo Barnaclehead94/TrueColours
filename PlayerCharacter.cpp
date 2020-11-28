@@ -19,6 +19,7 @@ APlayerCharacter::APlayerCharacter()
 	SAC->SetupAttachment(RootComponent);
 	SAC->TargetArmLength = DefaultArmLength;
 	SAC->SetRelativeRotation(DefaultSpringArmRot);
+	
 
 	Cam->AttachTo(SAC, USpringArmComponent::SocketName);
 
@@ -101,6 +102,10 @@ void APlayerCharacter::MoveRight(float AxisValue)
 
 void APlayerCharacter::Draw() 
 {
+
+	FVector DefaultSACSocketOffset = FVector(0.f, 0.f, 0.f);
+	FVector CombatSACSocketOffset = FVector(0.f,0.f,70.f);
+
 	if (CombatMode)
 	{
 		SAC->bEnableCameraRotationLag = true;
@@ -112,6 +117,7 @@ void APlayerCharacter::Draw()
 		SAC->CameraLagMaxDistance = 20;
 
 		SAC->TargetArmLength = DefaultArmLength;
+		SAC->TargetOffset = DefaultSACSocketOffset;
 		SAC->SetRelativeRotation(DefaultSpringArmRot);
 		UE_LOG(LogTemp, Warning, TEXT("Weapon holstered"));
 		CombatMode = false;
@@ -122,8 +128,9 @@ void APlayerCharacter::Draw()
 		SAC->bEnableCameraLag = false;
 
 		SAC->TargetArmLength = CombatArmLength;
+		SAC->TargetOffset = CombatSACSocketOffset;
 		SAC->SetRelativeRotation(CombatSpringArmRot);
-		SAC->SetRelativeLocation(FVector(25.0f, 0.f, 100.f));
+		SAC->SetRelativeLocation(FVector(90.0f, 0.f, 100.f));
 		UE_LOG(LogTemp, Warning, TEXT("Weapon drawn"));
 		CombatMode = true;
 	}
@@ -131,7 +138,10 @@ void APlayerCharacter::Draw()
 
 void APlayerCharacter::PrimaryFire() 
 {
-	Horn->PrimaryFire();
+	if (CombatMode)
+	{
+		Horn->PrimaryFire();
+	}
 }
 
 
