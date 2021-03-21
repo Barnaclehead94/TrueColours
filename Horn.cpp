@@ -48,9 +48,10 @@ void AHorn::PrimaryFire()
 	bool bSuccess = GetWorld()->LineTraceSingleByChannel(Hit, Location, End, ECollisionChannel::ECC_GameTraceChannel1);
 	if (bSuccess)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit detected"));
+		FVector ShotDirection = -Rotation.Vector();
 		DrawDebugPoint(GetWorld(), Hit.Location, 20, FColor::Blue, true);
 		DrawDebugPoint(GetWorld(), Location, 20, FColor::Red, true);
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(),HornLaserHit, Hit.Location, ShotDirection.Rotation());
 	}
 	
 	// DrawDebugCamera(GetWorld(), Location, Rotation, 90, 2, FColor::Red, true);

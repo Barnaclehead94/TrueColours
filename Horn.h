@@ -36,6 +36,8 @@ private:
 	// VARIABLES
 	UPROPERTY(EditAnywhere, Category = "Effects")
 	UParticleSystem* HornLaser;
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	UParticleSystem* HornLaserHit;
 	UPROPERTY(EditAnywhere)
 	float MaxRange = 2000.f;
 

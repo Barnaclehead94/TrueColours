@@ -66,8 +66,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	PlayerInputComponent->BindAxis(TEXT("LookUp"),this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis(TEXT("MoveRight"),this, &APlayerCharacter::MoveRight);
 	PlayerInputComponent->BindAxis(TEXT("LookRight"),this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis(TEXT("LookUpRate"),this, &APlayerCharacter::LookUpRate);
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &ACharacter::Jump);
-
 	PlayerInputComponent->BindAction(TEXT("PrimaryFire"), EInputEvent::IE_Pressed, this, &APlayerCharacter::PrimaryFire);
 	PlayerInputComponent->BindAction(TEXT("Draw"), EInputEvent::IE_Pressed, this, &APlayerCharacter::Draw);
 }
@@ -98,6 +98,11 @@ void APlayerCharacter::MoveRight(float AxisValue)
 	// 		SAC->AddLocalRotation(FRotator(AxisValue, 0, 0));
 	// 	}
 	// }
+}
+
+void APlayerCharacter::LookUpRate(float AxisValue) 
+{
+	AddControllerPitchInput(AxisValue * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
 void APlayerCharacter::Draw() 

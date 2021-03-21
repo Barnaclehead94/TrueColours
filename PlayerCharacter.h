@@ -56,6 +56,10 @@ private:
 	// MOVEMENT
 	void MoveForward(float AxisValue);
 	void MoveRight(float AxisValue);
+	void LookUpRate(float AxisValue);
+	
+	UPROPERTY(EditAnywhere)
+	float RotationRate = 10.f;
 	
 	//COMBAT
 	void PrimaryFire();
